@@ -1,4 +1,4 @@
-require_relative 'word'
+require_relative 'hangman_word'
 
 def get_valid_guess
   puts 'Guess?'
@@ -13,20 +13,22 @@ def get_valid_guess
 end
 
 def main
-  word = new.HangmanWord()
+  word = HangmanWord.new()
   puts 'Let\'s play a game of hangman!'
 
   loop do
     guess = get_valid_guess
-    word.make_guess
-    display_guessed_letters
-    if win?
+    word.make_guess(guess)
+    word.display_guess
+    if word.win?
       puts 'You win!'
       break
     end
-    if lose?
+    if word.lose?
       puts 'You lose!'
       break
     end
   end
 end
+
+main
