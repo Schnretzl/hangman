@@ -1,3 +1,5 @@
+require 'yaml'
+
 class HangmanWord
   attr_accessor :word
 
