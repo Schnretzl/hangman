@@ -35,18 +35,18 @@ class HangmanWord
     @guesses == MAX_GUESSES
   end
 
-  def save(filename = "hangman.yaml")
+  def save(filename = 'hangman.yaml')
     File.open(filename, 'w') do |file|
       file.write(to_yaml)
     end
   end
 
-  def self.load(filename = "hangman.yaml")
+  def self.load(filename = 'hangman.yaml')
     if File.exist?(filename)
       yaml_data = File.read(filename)
       YAML.load(yaml_data)
     else
-      puts "Error: No such file or directory"
+      puts 'Error: No such file or directory'
       nil
     end
   end
@@ -54,8 +54,19 @@ class HangmanWord
   private
 
   def generate_word()
-    words = File.readlines("google-10000-english-no-swears.txt", 'r').map(&:chomp)
-    words = words.select { |word| word.length >= 5 && word.length <= 12 }
-    words.sample
+    file = File.open('google-10000-english-no-swears.txt', 'r')
+    potential_words = []
+
+    begin
+      while(line = file.readline)
+        if line.chomp.length >= 5 && line.chomp.length <= 12
+          potential_words << line.chomp
+        end
+      end
+    rescue EOFError
+    ensure
+      file.close
+    end
+    potential_words.sample.downcase
   end
 end
