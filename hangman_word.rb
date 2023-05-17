@@ -35,6 +35,10 @@ class HangmanWord
     @guesses == MAX_GUESSES
   end
 
+  def already_guessed?(letter)
+    @wrong_guesses.include?(letter)
+  end
+
   def save(filename = 'hangman.yaml')
     File.open(filename, 'w') do |file|
       file.write(to_yaml)
