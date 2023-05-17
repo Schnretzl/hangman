@@ -26,6 +26,22 @@ class HangmanWord
     @guesses == 6
   end
 
+  def save(filename = "hangman.yaml")
+    File.open(filename, 'w') do |file|
+      file.write(to_yaml)
+    end
+  end
+
+  def self.load(filename = "hangman.yaml")
+    if File.exist?(filename)
+      yaml_data = File.read(filename)
+      YAML.load(yaml_data)
+    else
+      puts "Error: No such file or directory"
+      nil
+    end
+  end
+
   private
 
   def generate_word()
