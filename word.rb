@@ -4,7 +4,7 @@ class HangmanWord
   def initialize(word)
     @word = word
     @guesses = 0
-    @answer_letter_array = word.split('')
+    @answer_letter_array = word.chars()
     @guess_letter_array = Array.new(@word.length, '_')
   end
 
@@ -14,5 +14,13 @@ class HangmanWord
     else
       @guesses += 1
     end
+  end
+
+  def win?
+    @guess_letter_array == @answer_letter_array
+  end
+
+  def lose?
+    @guesses == 6
   end
 end
