@@ -1,6 +1,7 @@
 require 'yaml'
 
 class HangmanWord
+  MAX_GUESSES = 6
   attr_accessor :word
 
   def initialize(word = generate_word())
@@ -18,12 +19,16 @@ class HangmanWord
     end
   end
 
+  def display_guess
+    puts @guess_letter_array.join(' ')
+  end
+
   def win?
     @guess_letter_array == @answer_letter_array
   end
 
   def lose?
-    @guesses == 6
+    @guesses == MAX_GUESSES
   end
 
   def save(filename = "hangman.yaml")
