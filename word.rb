@@ -1,7 +1,7 @@
 class HangmanWord
   attr_accessor :word
 
-  def initialize(word)
+  def initialize(word = generate_word())
     @word = word
     @guesses = 0
     @answer_letter_array = word.chars()
@@ -22,5 +22,13 @@ class HangmanWord
 
   def lose?
     @guesses == 6
+  end
+
+  private
+
+  def generate_word()
+    words = File.readlines("google-10000-english-no-swears.txt", 'r').map(&:chomp)
+    words = words.select { |word| word.length >= 5 && word.length <= 12 }
+    words.sample
   end
 end
