@@ -9,18 +9,21 @@ class HangmanWord
     @guesses = 0
     @answer_letter_array = word.chars()
     @guess_letter_array = Array.new(@word.length, '_')
+    @wrong_guesses = []
   end
 
   def make_guess(letter)
     if @word.include?(letter)
       @guess_letter_array = @guess_letter_array.zip(@answer_letter_array).map { |guess_letter, word_letter| word_letter == letter ? letter : guess_letter }
     else
+      @wrong_guesses << letter
       @guesses += 1
     end
   end
 
   def display_guess
     puts @guess_letter_array.join(' ')
+    puts "Letters guessed: #{@wrong_guesses.join(', ')}"
   end
 
   def win?
