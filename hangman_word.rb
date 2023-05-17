@@ -24,6 +24,7 @@ class HangmanWord
   def display_guess
     puts @guess_letter_array.join(' ')
     puts "Letters guessed: #{@wrong_guesses.join(', ')}"
+    puts "Wrong guesses remaining: #{MAX_GUESSES - @guesses}"
   end
 
   def win?
