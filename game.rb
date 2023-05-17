@@ -1,10 +1,10 @@
 require_relative 'hangman_word'
 
 def get_valid_guess(word)
-  puts 'Guess?'
+  puts 'Enter guess, or (1)to save game, or (2)to load game'
   loop do
     input = STDIN.gets.chomp
-    if input.length == 1 && input =~ /[a-zA-Z]/
+    if input.length == 1 && input =~ /[a-zA-Z12]/
       if word.already_guessed?(input)
         puts 'Letter has already been guessed!'
         next
