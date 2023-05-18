@@ -17,11 +17,11 @@ def get_valid_guess(word)
 end
 
 def get_valid_filename
-  puts "Enter a filename (default is 'hangman'):"
+  puts "Enter a filename (default is 'hangman.yaml'):"
   loop do
     input = STDIN.gets.chomp
-    if input =~ /^[a-zA-Z0-9_.-]+$/
-      return input.empty? ? 'hangman' : input
+    if input =~ /^[a-zA-Z0-9_.-]+$/ || input == ''
+      return input.empty? ? 'hangman.yaml' : input
     else
       puts 'Invalid filename. Please enter a valid filename:'
     end
@@ -31,15 +31,16 @@ end
 def save_game(word)
   filename = get_valid_filename
   word.save(filename)
-  puts "Game saved as #{filename}.  Press any key to quit."
+  puts "Game saved as #{filename}.  Press enter to quit."
   STDIN.gets.chomp
 end
 
 def load_game(word)
   filename = get_valid_filename
   word = HangmanWord.load_saved_game(filename)
-  puts "Game loaded!  Press any key to continue."
+  puts "Game loaded!  Press enter to continue."
   STDIN.gets.chomp
+  word
 end
 
 def main
@@ -53,7 +54,8 @@ def main
       save_game(word)
       break
     elsif guess == '2'
-      load_game(word)
+      word = load_game(word)
+      next
     end
 
     word.make_guess(guess)
