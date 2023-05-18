@@ -1,6 +1,7 @@
 require 'yaml'
 
 class HangmanWord
+  SAVE_DIRECTORY = 'saves'.freeze
   MAX_GUESSES = 6
   attr_accessor :word
 
@@ -40,17 +41,18 @@ class HangmanWord
   end
 
   def save(filename = 'hangman.yaml')
-    File.open(filename, 'w') do |file|
+    Dir.mkdir(SAVE_DIRECTORY) unless File.directory?(SAVE_DIRECTORY)
+    File.open(File.join(SAVE_DIRECTORY, filename), 'w') do |file|
       file.write(to_yaml)
     end
   end
 
   def self.load(filename = 'hangman.yaml')
-    if File.exist?(filename)
-      yaml_data = File.read(filename)
+    if File.exist?(File.join(SAVE_DIRECTORY, filename))
+      yaml_data = File.read(File.join(SAVE_DIRECTORY, filename))
       YAML.load(yaml_data)
     else
-      puts 'Error: No such file or directory'
+      puts "Error: No such file or directory"
       nil
     end
   end
@@ -62,7 +64,7 @@ class HangmanWord
     potential_words = []
 
     begin
-      while(line = file.readline)
+      while (line = file.readline)
         if line.chomp.length >= 5 && line.chomp.length <= 12
           potential_words << line.chomp
         end
