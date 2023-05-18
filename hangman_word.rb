@@ -47,10 +47,10 @@ class HangmanWord
     end
   end
 
-  def self.load(filename = 'hangman.yaml')
+  def self.load_saved_game(filename = 'hangman.yaml')
     if File.exist?(File.join(SAVE_DIRECTORY, filename))
       yaml_data = File.read(File.join(SAVE_DIRECTORY, filename))
-      YAML.load(yaml_data)
+      Psych.safe_load(yaml_data, permitted_classes: [HangmanWord])
     else
       puts "Error: No such file or directory"
       nil

@@ -1,0 +1,21 @@
+--- !ruby/object:HangmanWord
+word: chester
+guesses: 1
+answer_letter_array:
+- c
+- h
+- e
+- s
+- t
+- e
+- r
+guess_letter_array:
+- _
+- _
+- _
+- _
+- _
+- _
+- _
+wrong_guesses:
+- f
